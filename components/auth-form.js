@@ -4,14 +4,22 @@ import Link from "next/link";
 
 import { signup } from "../actions/auth-actions";
 import { useActionState } from "react";
+import Image from "next/image";
 
-export default function AuthForm() {
+export default function AuthForm({ mode }) {
+  // "login or signup"
   const [formState, formAction] = useActionState(signup, { errors: null });
 
   return (
     <form id="auth-form" action={formAction}>
       <div>
-        <img src="/images/auth-icon.jpg" alt="A lock icon" />
+        <Image
+          width={50}
+          height={50}
+          loading="eager"
+          src="/images/auth-icon.jpg"
+          alt="A lock icon"
+        />
       </div>
       <p>
         <label htmlFor="email">Email</label>
@@ -30,10 +38,17 @@ export default function AuthForm() {
         </ul>
       )}
       <p>
-        <button type="submit">Create Account</button>
+        <button type="submit">
+          {mode === "login" ? "Login" : "Create Account"}
+        </button>
       </p>
       <p>
-        <Link href="/">Login with existing account.</Link>
+        {mode === "login" && (
+          <Link href="/?mode=signup">Create an account .</Link>
+        )}
+        {mode === "signup" && (
+          <Link href="/?mode=login">Login with existing account.</Link>
+        )}
       </p>
     </form>
   );
