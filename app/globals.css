@@ -152,6 +152,7 @@ main {
 
 #training-sessions li img {
   width: 100%;
+  height: auto;
 }
 
 #training-sessions li h2 {
